@@ -3,11 +3,24 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const [ showLogo, setShowLogo] = React.useState(true);
+  const [ color, setColor] = React.useState('blue');
+  
+  React.useEffect(() => {
+    const colors = ["red", "blue", "green"];
+    let index = 0;
+    const interval = setInterval(() => {
+      setColor(colors[((index++) % colors.length)]);  
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [])
   return (
-    <div className="App">
+    <div className="App" onClick={() => {
+      setShowLogo(showLogo => !showLogo);
+    }}>
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
+      { showLogo && <img src={logo} className="App-logo" alt="logo" /> }
+        <p bgColor={color}>
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <a
